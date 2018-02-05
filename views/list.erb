@@ -1,0 +1,22 @@
+<h2><%= @list[:name] %></h2>
+
+<p>
+  <% unless @list[:todos].empty? %>
+    <ul>
+      <% @list[:todos].each do |todo| %>
+        <li>
+          <a href="#">
+            <h2><%= todo %></h2>
+          </a>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    No todos to show
+  <% end %>
+</p>
+
+<form method="post" action="/lists/<%= @id %>">
+  Create new todo: <input name="todo" value="" type="text" />
+  <input type="submit" value="submit" />
+</form>
