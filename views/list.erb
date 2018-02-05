@@ -1,0 +1,21 @@
+<h2><%= @list[:name] %></h2>
+
+<p>
+  <% unless @list[:todos].empty? %>
+    <ul id="lists">
+      <% @list[:todos].each do |todo| %>
+        <li>
+          <a href="#">
+            <h2><%= todo %></h2>
+          </a>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    No todos to show
+  <% end %>
+</p>
+
+<p>
+  <a href="/lists/<%= @id%>/new">Create new todo</a>
+</p>
