@@ -9,20 +9,15 @@ end
 
 before do
   session[:lists] ||= []
+  @lists = session[:lists]
 end
 
 get "/" do
   redirect "/lists"
 end
 
-# GET  /lists       view lists
-# POST /lists       create new list
-# GET  /lists/new   form for creating new list
-# GET  /lists/:id   view single list
-
 # view all lists
 get "/lists" do
-  @lists = session[:lists]
   erb(:lists, layout: :layout)
 end
 
@@ -31,16 +26,26 @@ get "/lists/new" do
   erb(:new, layout: :layout)
 end
 
+# helper for post lists route
+def error_message(name)
+  if name.length < 1
+    "List names have to contain at least one character."
+  elsif @lists.any? { |list| list[:name] == name }
+    "List names have to be unique."
+  end
+end
+
 # create new list
 post "/lists" do
-  name = params[:list_name].strip
+  list_name = params[:list_name].strip
+  error = error_message(list_name)
 
-  if name.length > 0 &&
-    session[:lists] << { name: name, todos: [] }
+  if error
+    session[:error] = error
+    erb(:new, layout: :layout)
+  else
+    @lists << { name: list_name, todos: [] }
     session[:success] = "List has been succesfully created!"
     redirect "/lists"
-  else
-    session[:error] = "List names have to contain at least one character."
-    erb(:new, layout: :layout)
   end
 end
