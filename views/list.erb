@@ -2,7 +2,7 @@
 
 <p>
   <% unless @list[:todos].empty? %>
-    <ul id="lists">
+    <ul>
       <% @list[:todos].each do |todo| %>
         <li>
           <a href="#">
@@ -16,6 +16,7 @@
   <% end %>
 </p>
 
-<p>
-  <a href="/lists/<%= @id%>/new">Create new todo</a>
-</p>
+<form method="post" action="/lists/<%= @id %>">
+  Create new todo: <input name="todo" value="" type="text" />
+  <input type="submit" value="submit" />
+</form>

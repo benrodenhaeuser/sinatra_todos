@@ -41,7 +41,7 @@ get "/lists/:id" do
   else
     session[:error] = "The requested list does not exist."
     redirect "/lists"
-  end 
+  end
 end
 
 # create new list
@@ -49,9 +49,10 @@ post "/lists" do
   list_name = params[:list_name].strip
 
   if list_name.length > 0
+    @id = @lists.length
     @lists << { name: list_name, todos: [] }
     session[:success] = "List has been succesfully created!"
-    redirect "/lists"
+    redirect "/lists/#{@id}"
   else
     session[:error] = "List names have to contain at least one character."
     erb(:new_list, layout: :layout)
