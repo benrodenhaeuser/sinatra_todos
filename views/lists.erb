@@ -1,14 +1,19 @@
 <ul id="lists">
-  <% @lists.each_with_index do |list, index| %>
-    <li>
-      <a href="/lists/<%= index %>">
-        <h2><%= list[:name] %></h2>
-        <p><%= list[:todos].size %></p>
-      </a>
-    </li>
+  <% sort_lists do |list, index| %>
+    <% unless list[:deleted] %>
+      <li class="<%= list_class(list) %>" >
+        <a href="/lists/<%= index %>">
+          <h2><%= list[:name] %></h2>
+          <p><%= remaining(list[:todos]) %>/<%= list[:todos].size %></p>
+        </a>
+      </li>
+    <% end %>
   <% end %>
 </ul>
 
-<p>
-  <a href="/lists/new">Create new list</a>
-</p>
+<% content_for :header_links do %>
+  <a href="/lists/new" class="add">Create new list</a>
+  <% unless @lists.select { |list| list[:deleted] }.empty? %>
+    &nbsp;&nbsp;<a href="/lists/trash" class="trash">View Trash</a>
+  <% end %>
+<% end %>

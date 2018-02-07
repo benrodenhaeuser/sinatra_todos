@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en-US">
+<html lang="en-US" style="padding: 50px">
   <head>
     <title>Todo App</title>
     <meta charset="UTF-8">
@@ -10,6 +10,9 @@
   <body>
     <header>
       <h1><a href="/">Todo Tracker</a></h1>
+      <div class="actions">
+        <%= yield_content :header_links %>
+      </div>
     </header>
 
     <% if session[:success] %>

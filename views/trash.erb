@@ -1,0 +1,22 @@
+Displaying deleted lists
+
+<ul id="lists">
+  <% @lists.each_with_index do |list, index| %>
+    <% if list[:deleted] %>
+      <li>
+          <h2><%= list[:name] %> </h2>
+          <p>
+            <%= list[:todos].size %>
+          </p>
+          <p>
+            <form method="post" action="/lists/<%= index %>/restore"><button type="submit">Restore</button></form>
+          </p>
+        </a>
+      </li>
+    <% end %>
+  <% end %>
+</ul>
+
+<% content_for :header_links do %>
+<a href="/lists">Back to main</a>
+<% end %>
