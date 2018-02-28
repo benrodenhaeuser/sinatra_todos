@@ -1,8 +1,8 @@
 <ul id="lists">
-  <% sort_lists do |list, index| %>
+  <% sort_lists do |list| %>
     <% unless list[:deleted] %>
       <li class="<%= list_class(list) %>" >
-        <a href="/lists/<%= index %>">
+        <a href="/lists/<%= list[:id] %>">
           <h2><%= list[:name] %></h2>
           <p><%= remaining(list[:todos]) %>/<%= list[:todos].size %></p>
         </a>
@@ -13,7 +13,4 @@
 
 <% content_for :header_links do %>
   <a href="/lists/new" class="add">Create new list</a>
-  <% unless @lists.select { |list| list[:deleted] }.empty? %>
-    &nbsp;&nbsp;<a href="/lists/trash" class="trash">View Trash</a>
-  <% end %>
 <% end %>
